@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FutureForge AI - Advanced Life & Career Simulator</title>
+  <!-- SEO Tags -->
+  <meta name="description" content="Simulate future outcomes of major life and career decisions using a multi-agent AI system. Compare alternative paths side-by-side, view animated SVG trend charts, and examine regret minimizers.">
+  <meta name="keywords" content="career simulator, decision making, future projection, multi-agent AI, career advice, regret score, compare decisions">
+  
+  <!-- Modern Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Background Glowing Blobs -->
+  <div class="glow-bg">
+    <div class="blob blob-purple"></div>
+    <div class="blob blob-cyan"></div>
+    <div class="blob blob-emerald"></div>
+  </div>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="logo-area">
+        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="url(#logoGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M2 17L12 22L22 17" stroke="url(#logoGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M2 12L12 17L22 12" stroke="url(#logoGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <defs>
+            <linearGradient id="logoGrad" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#a855f7" />
+              <stop offset="1" stop-color="#06b6d4" />
+            </linearGradient>
+          </defs>
+        </svg>
+        <h1 class="logo-text">FutureForge <span class="accent-text">AI</span></h1>
+      </div>
+      <p class="tagline">Forge your decisions. Compare your alternate futures.</p>
+    </header>
+
+    <main class="main-content">
+      
+      <!-- Input Section & Wizard -->
+      <section class="section-card setup-section" id="setup-panel">
+        <div class="section-header">
+          <span class="step-badge">Phase 1</span>
+          <h2>Define Your Path</h2>
+          <p>Provide your personality parameters and your core life decision to begin the multi-agent simulation.</p>
+        </div>
+
+        <!-- Mode Switcher -->
+        <div class="mode-selector-wrapper">
+          <label class="wizard-label">Simulation Mode</label>
+          <div class="mode-switcher">
+            <button type="button" class="mode-btn active" id="mode-single">🔮 Single Decision</button>
+            <button type="button" class="mode-btn" id="mode-compare">⚖️ Compare Alternate Paths</button>
+          </div>
+        </div>
+
+        <!-- Personality Form -->
+        <div class="personality-wizard">
+          <h3>1. Define Your Profile</h3>
+          
+          <div class="wizard-grid">
+            <!-- Q1: Introvert vs Extrovert -->
+            <div class="wizard-card" id="q-social">
+              <label class="wizard-label">Social Energy Source</label>
+              <div class="radio-options">
+                <button type="button" class="option-btn active" data-type="social" data-value="introvert">
+                  <div class="option-icon">🧘‍♂️</div>
+                  <div class="option-info">
+                    <span class="option-title">Introverted</span>
+                    <span class="option-desc">Prefers quiet focus, recharges alone.</span>
+                  </div>
+                </button>
+                <button type="button" class="option-btn" data-type="social" data-value="extrovert">
+                  <div class="option-icon">📣</div>
+                  <div class="option-info">
+                    <span class="option-title">Extroverted</span>
+                    <span class="option-desc">Energized by collaboration and crowds.</span>
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            <!-- Q2: Risk Attitude -->
+            <div class="wizard-card" id="q-risk">
+              <label class="wizard-label">Risk Threshold</label>
+              <div class="radio-options">
+                <button type="button" class="option-btn" data-type="risk" data-value="low">
+                  <div class="option-icon">🛡️</div>
+                  <div class="option-info">
+                    <span class="option-title">Risk-Averse</span>
+                    <span class="option-desc">Prioritizes security and predictability.</span>
+                  </div>
+                </button>
+                <button type="button" class="option-btn active" data-type="risk" data-value="moderate">
+                  <div class="option-icon">⚖️</div>
+                  <div class="option-info">
+                    <span class="option-title">Calculated Risk</span>
+                    <span class="option-desc">Balances caution with potential rewards.</span>
+                  </div>
+                </button>
+                <button type="button" class="option-btn" data-type="risk" data-value="high">
+                  <div class="option-icon">🚀</div>
+                  <div class="option-info">
+                    <span class="option-title">Risk-Taker</span>
+                    <span class="option-desc">Embraces volatility for massive returns.</span>
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            <!-- Q3: Driving Motivator -->
+            <div class="wizard-card" id="q-priority">
+              <label class="wizard-label">Primary Driver</label>
+              <div class="radio-options">
+                <button type="button" class="option-btn" data-type="priority" data-value="stability">
+                  <div class="option-icon">💼</div>
+                  <div class="option-info">
+                    <span class="option-title">Stability & Wealth</span>
+                    <span class="option-desc">Financial safety and career predictability.</span>
+                  </div>
+                </button>
+                <button type="button" class="option-btn active" data-type="priority" data-value="balance">
+                  <div class="option-icon">🌻</div>
+                  <div class="option-info">
+                    <span class="option-title">Life Balance</span>
+                    <span class="option-desc">Time for family, hobbies, and wellness.</span>
+                  </div>
+                </button>
+                <button type="button" class="option-btn" data-type="priority" data-value="passion">
+                  <div class="option-icon">🎨</div>
+                  <div class="option-info">
+                    <span class="option-title">Creative Passion</span>
+                    <span class="option-desc">Impact, interest, and artistic pursuit.</span>
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Decision Sandbox -->
+        <div class="decision-sandbox">
+          <div class="sandbox-header">
+            <h3>2. Input Your Decision</h3>
+            <div class="template-selector">
+              <span class="helper-lbl">Quick Templates:</span>
+              <button type="button" class="template-pill" id="temp-bakery">🥖 Bakery Start</button>
+              <button type="button" class="template-pill" id="temp-abroad">🎌 Move Abroad</button>
+              <button type="button" class="template-pill" id="temp-corp">⚖️ Corporate Law</button>
+              <button type="button" class="template-pill" id="temp-startup">🚀 AI Startup</button>
+            </div>
+          </div>
+
+          <!-- Single Input Box -->
+          <div class="input-wrapper" id="single-input-wrapper">
+            <textarea 
+              id="decision-input" 
+              placeholder="e.g. Should I leave my stable marketing job of 5 years to write my first sci-fi novel and freelance part-time?" 
+              maxlength="300"
+              rows="3"
+            ></textarea>
+            <div class="char-counter"><span id="char-count">0</span> / 300</div>
+          </div>
+
+          <!-- Compare Input Boxes (Grid) -->
+          <div class="compare-input-grid hidden" id="compare-input-wrapper">
+            <div class="input-wrapper">
+              <label class="wizard-label font-accent">Path A (Proposed Move)</label>
+              <textarea 
+                id="decision-input-a" 
+                placeholder="e.g. Quit my corporate tech job to start an indie bakery" 
+                maxlength="200"
+                rows="3"
+              ></textarea>
+              <div class="char-counter"><span id="char-count-a">0</span> / 200</div>
+            </div>
+            <div class="input-wrapper">
+              <label class="wizard-label font-accent">Path B (Alternative Status Quo)</label>
+              <textarea 
+                id="decision-input-b" 
+                placeholder="e.g. Remain in my corporate software engineering job and seek promotion" 
+                maxlength="200"
+                rows="3"
+              ></textarea>
+              <div class="char-counter"><span id="char-count-b">0</span> / 200</div>
+            </div>
+          </div>
+
+          <!-- Alert / Safety Warn (Hidden by default) -->
+          <div class="safety-warn-box hidden" id="safety-alert">
+            <div class="warn-header">
+              <svg class="warn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 9V14M12 17.01H12.01M5.07 19H18.93C20.47 19 21.43 17.33 20.66 16L13.73 4C12.96 2.67 11.04 2.67 10.27 4L3.34 16C2.57 17.33 3.53 19 5.07 19Z" stroke="#f43f5e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <h4>Simulations Blocked by Guardrail</h4>
+            </div>
+            <p id="safety-msg">Your input matches our safety filter parameters for illegal, high-harm, or unethical themes. AI agents will not simulate futures based on harmful paths.</p>
+          </div>
+
+          <!-- Action Button -->
+          <button id="forge-btn" class="forge-btn">
+            <span>Forge Simulated Futures</span>
+            <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </section>
+
+      <!-- Simulation Loading Screen -->
+      <section class="section-card loading-section hidden" id="loading-panel">
+        <div class="forge-loader">
+          <div class="loader-ring"></div>
+          <div class="loader-center-glow"></div>
+          <div class="loader-logo">FF</div>
+        </div>
+        <h3>Igniting Multi-Agent Simulation Engine...</h3>
+        <p id="loader-status">Consulting Growth Agent, Risk Agent, and Happiness Agent...</p>
+      </section>
+
+      <!-- Simulation Dashboard (Hidden by default) -->
+      <div class="dashboard-grid hidden" id="dashboard-panel">
+        
+        <!-- SECTION 1: Agent Debate Arena -->
+        <section class="section-card debate-section">
+          <div class="card-header">
+            <span class="tag-glow blue-glow">Section 1</span>
+            <h2>Agent Debate</h2>
+            <p>Our expert sub-agents analyze the decision and clash over predictions before making the final advice.</p>
+          </div>
+
+          <!-- Tab console for comparison mode debates -->
+          <div class="debate-tabs hidden" id="debate-tabs-container">
+            <button class="debate-tab-btn active" id="tab-path-a">Path A Council</button>
+            <button class="debate-tab-btn" id="tab-path-b">Path B Council</button>
+          </div>
+
+          <!-- Chat Console -->
+          <div class="debate-console" id="debate-chat-container">
+            <!-- Messages populated dynamically -->
+          </div>
+
+          <!-- Final Decision Box (Single Path) -->
+          <div class="decision-verdict-box hidden" id="decision-verdict-container">
+            <div class="verdict-banner">
+              <span class="verdict-badge">⚖️ Final Consensus Verdict</span>
+              <div class="verdict-stars"><span class="sparkle">✦</span> Summary Verdict</div>
+            </div>
+            <h3 id="verdict-title">Synthesis Verdict</h3>
+            <p id="verdict-body">...</p>
+          </div>
+
+          <!-- Final Decision Grid (Compare Path) -->
+          <div class="compare-verdict-grid hidden" id="compare-verdict-container">
+            <div class="decision-verdict-box border-glow-a">
+              <div class="verdict-banner"><span class="verdict-badge path-a-badge">🔮 Path A Consensus</span></div>
+              <h3 id="verdict-title-a">Path A Verdict</h3>
+              <p id="verdict-body-a">...</p>
+            </div>
+            <div class="decision-verdict-box border-glow-b">
+              <div class="verdict-banner"><span class="verdict-badge path-b-badge">🔱 Path B Consensus</span></div>
+              <h3 id="verdict-title-b">Path B Verdict</h3>
+              <p id="verdict-body-b">...</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 2: Scenarios -->
+        <section class="section-card scenario-section">
+          <div class="card-header">
+            <span class="tag-glow green-glow">Section 2</span>
+            <h2>Future Scenarios</h2>
+            <p>Simulating outcomes across different realities. Toggle cases to see potential futures.</p>
+          </div>
+
+          <!-- Scenario Toggles -->
+          <div class="scenario-toggles">
+            <button class="scenario-toggle active" data-scenario="best">
+              <span class="scenario-emoji">🟢</span> Best Case
+            </button>
+            <button class="scenario-toggle" data-scenario="average">
+              <span class="scenario-emoji">🟡</span> Average Case
+            </button>
+            <button class="scenario-toggle" data-scenario="worst">
+              <span class="scenario-emoji">🔴</span> Worst Case
+            </button>
+          </div>
+
+          <!-- Scenario Details Cards -->
+          <div class="scenario-details-container">
+            
+            <!-- Single Path Layout Details -->
+            <div class="scenario-details-block" id="single-scenario-details">
+              <div class="scenario-card">
+                <h3 id="scenario-headline">The Initial Shift</h3>
+                <p id="scenario-desc">Exploring how this decision begins to shape your daily reality.</p>
+                
+                <!-- Metrics Grid -->
+                <div class="metrics-grid">
+                  <div class="metric-item">
+                    <div class="metric-head">
+                      <span class="metric-label">💰 Success & Salary</span>
+                      <span class="metric-val" id="metric-growth">60%</span>
+                    </div>
+                    <div class="bar-bg"><div class="bar-fill emerald-bar" id="bar-growth" style="width: 60%"></div></div>
+                  </div>
+                  <div class="metric-item">
+                    <div class="metric-head">
+                      <span class="metric-label">⚡ Stress & Pressure</span>
+                      <span class="metric-val" id="metric-stress">40%</span>
+                    </div>
+                    <div class="bar-bg"><div class="bar-fill crimson-bar" id="bar-stress" style="width: 40%"></div></div>
+                  </div>
+                  <div class="metric-item">
+                    <div class="metric-head">
+                      <span class="metric-label">🔥 Burnout Risk</span>
+                      <span class="metric-val" id="metric-burnout">30%</span>
+                    </div>
+                    <div class="bar-bg"><div class="bar-fill orange-bar" id="bar-burnout" style="width: 30%"></div></div>
+                  </div>
+                  <div class="metric-item">
+                    <div class="metric-head">
+                      <span class="metric-label">💖 Life Satisfaction</span>
+                      <span class="metric-val" id="metric-happiness">70%</span>
+                    </div>
+                    <div class="bar-bg"><div class="bar-fill cyan-bar" id="bar-happiness" style="width: 70%"></div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Compare Path Layout Details -->
+            <div class="compare-details-grid hidden" id="compare-scenario-details">
+              <div class="scenario-card border-glow-a">
+                <h4 class="font-accent-a">Path A: Scenario details</h4>
+                <h3 id="scenario-headline-a">...</h3>
+                <p id="scenario-desc-a">...</p>
+              </div>
+              
+              <div class="scenario-card border-glow-b">
+                <h4 class="font-accent-b">Path B: Scenario details</h4>
+                <h3 id="scenario-headline-b">...</h3>
+                <p id="scenario-desc-b">...</p>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- SECTION 3: Timeline -->
+        <section class="section-card timeline-section">
+          <div class="card-header">
+            <span class="tag-glow green-glow">Section 3</span>
+            <h2>Timeline Options (Year 1, 3, 5)</h2>
+            <p>See how your trajectory shapes over the next 5 years.</p>
+          </div>
+
+          <!-- Timeline Slider -->
+          <div class="timeline-slider-container">
+            <div class="timeline-tracks">
+              <div class="timeline-track-filled" id="track-progress" style="width: 0%;"></div>
+              <div class="timeline-node active" data-year="1">
+                <div class="node-dot"></div>
+                <span class="node-label">Year 1</span>
+              </div>
+              <div class="timeline-node" data-year="3">
+                <div class="node-dot"></div>
+                <span class="node-label">Year 3</span>
+              </div>
+              <div class="timeline-node" data-year="5">
+                <div class="node-dot"></div>
+                <span class="node-label">Year 5</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="scenario-details-container">
+
+            
+            <!-- Dynamic SVG Trend Charting -->
+            <div class="svg-chart-container">
+              <h4 class="chart-title">📊 5-Year Projection Chart (Success vs Burnout)</h4>
+              <div class="chart-canvas-wrapper">
+                <svg id="trend-svg" viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Grid Lines -->
+                  <line x1="50" y1="20" x2="450" y2="20" class="chart-grid-line" />
+                  <line x1="50" y1="100" x2="450" y2="100" class="chart-grid-line" />
+                  <line x1="50" y1="180" x2="450" y2="180" class="chart-grid-line" />
+                  <!-- Vertical Year lines -->
+                  <line x1="50" y1="20" x2="50" y2="185" class="chart-axis-line" />
+                  <line x1="250" y1="20" x2="250" y2="185" class="chart-axis-line" />
+                  <line x1="450" y1="20" x2="450" y2="185" class="chart-axis-line" />
+                  
+                  <text x="50" y="195" class="chart-axis-label" text-anchor="middle">Year 1</text>
+                  <text x="250" y="195" class="chart-axis-label" text-anchor="middle">Year 3</text>
+                  <text x="450" y="195" class="chart-axis-label" text-anchor="middle">Year 5</text>
+                  
+                  <text x="45" y="25" class="chart-axis-label-val" text-anchor="end">100%</text>
+                  <text x="45" y="105" class="chart-axis-label-val" text-anchor="end">50%</text>
+                  <text x="45" y="185" class="chart-axis-label-val" text-anchor="end">0%</text>
+
+                  <!-- Dynamic Paths -->
+                  <path id="chart-path-growth-a" d="" fill="none" stroke="var(--color-growth)" stroke-width="3.5" stroke-linecap="round" />
+                  <path id="chart-path-burnout-a" d="" fill="none" stroke="var(--color-risk)" stroke-width="3.5" stroke-linecap="round" />
+                  <path id="chart-path-growth-b" d="" class="hidden" fill="none" stroke="var(--color-happiness)" stroke-width="3" stroke-dasharray="6,4" stroke-linecap="round" />
+                  <path id="chart-path-burnout-b" d="" class="hidden" fill="none" stroke="var(--color-primary)" stroke-width="3" stroke-dasharray="6,4" stroke-linecap="round" />
+
+                  <!-- Active circles nodes (rendered by JS) -->
+                  <g id="chart-dots"></g>
+                </svg>
+              </div>
+              <div class="chart-legend-box">
+                <span class="legend-item"><span class="legend-circle bg-growth"></span> Success (A)</span>
+                <span class="legend-item"><span class="legend-circle bg-risk"></span> Burnout (A)</span>
+                <span class="legend-item compare-only hidden"><span class="legend-circle bg-happiness dashed-c"></span> Success (B)</span>
+                <span class="legend-item compare-only hidden"><span class="legend-circle bg-primary dashed-c"></span> Burnout (B)</span>
+              </div>
+            </div>
+
+            <div class="scenario-details-block" id="single-scenario-milestones">
+              <div class="milestones-card">
+                <h4>🎯 Year Key Milestone</h4>
+                <p id="milestone-text">...</p>
+              </div>
+            </div>
+
+            <!-- Compare Path Layout Details -->
+            <div class="compare-details-grid hidden" id="compare-scenario-milestones">
+              <div class="milestones-card margin-bottom-sm">
+                <h4 class="font-accent-a">🎯 Milestone (Path A)</h4>
+                <p id="milestone-text-a">...</p>
+              </div>
+              
+              <div class="milestones-card margin-bottom-sm">
+                <h4 class="font-accent-b">🎯 Milestone (Path B)</h4>
+                <p id="milestone-text-b">...</p>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- SECTION 4: Regret Gauge & Playbook -->
+        <section class="section-card regret-section">
+          <div class="card-header">
+            <span class="tag-glow rose-glow">Section 4</span>
+            <h2>Regret Score with Reasons</h2>
+            <p>Calculates the probability of experiencing regret years down the line.</p>
+          </div>
+
+          <!-- Gauges wrapper -->
+          <div class="regret-content">
+            
+            <div class="gauges-container-flex" id="regret-gauges-container">
+              <!-- Gauge A -->
+              <div class="gauge-display-unit" id="gauge-unit-a">
+                <span class="gauge-lbl compare-only hidden">Path A</span>
+                <div class="gauge-wrapper">
+                  <svg class="radial-gauge" viewBox="0 0 120 120">
+                    <circle class="gauge-track" cx="60" cy="60" r="50" fill="none" stroke-width="8" />
+                    <circle class="gauge-value" id="regret-gauge" cx="60" cy="60" r="50" fill="none" stroke-width="8" stroke-dasharray="314.16" stroke-dashoffset="314.16" />
+                    <text class="gauge-number" id="regret-score-text" x="60" y="62" text-anchor="middle" dominant-baseline="middle">0%</text>
+                  </svg>
+                </div>
+                <h3 id="regret-level">Moderate Regret Risk</h3>
+              </div>
+
+              <!-- Gauge B (Compare only) -->
+              <div class="gauge-display-unit compare-only hidden" id="gauge-unit-b">
+                <span class="gauge-lbl">Path B</span>
+                <div class="gauge-wrapper">
+                  <svg class="radial-gauge" viewBox="0 0 120 120">
+                    <circle class="gauge-track" cx="60" cy="60" r="50" fill="none" stroke-width="8" />
+                    <circle class="gauge-value stroke-primary" id="regret-gauge-b" cx="60" cy="60" r="50" fill="none" stroke-width="8" stroke-dasharray="314.16" stroke-dashoffset="314.16" />
+                    <text class="gauge-number" id="regret-score-text-b" x="60" y="62" text-anchor="middle" dominant-baseline="middle">0%</text>
+                  </svg>
+                </div>
+                <h3 id="regret-level-b">Low Regret Risk</h3>
+              </div>
+            </div>
+
+            <!-- Regret details text -->
+            <div class="regret-details width-full">
+              <p id="regret-explanation">Explanation text...</p>
+              
+              <div class="regret-bulletin">
+                <h4>⚠️ Triggers for Regret:</h4>
+                <ul id="regret-triggers-list">
+                  <!-- Triggers dynamically populated -->
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Playbook minimization checklist -->
+          <div class="regret-playbook-card" id="playbook-panel">
+            <h4>📋 Strategic Regret Minimization Playbook</h4>
+            <p class="playbook-subtitle">Actions derived from your profile to mitigate high-regret predictions.</p>
+            <div class="playbook-grid" id="playbook-content">
+              <!-- Checklist options printed by JS -->
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 5: Story Engine -->
+        <section class="section-card story-section">
+          <div class="card-header">
+            <span class="tag-glow purple-glow">Section 5</span>
+            <h2>Future Story</h2>
+            <p>A cinematic narrative visualization of your life, derived directly from your personality and decision simulation.</p>
+          </div>
+
+          <!-- Story Tabs for Comparison Mode -->
+          <div class="debate-tabs hidden" id="story-tabs-container">
+            <button class="debate-tab-btn active" id="story-tab-a">Path A Story</button>
+            <button class="debate-tab-btn" id="story-tab-b">Path B Story</button>
+          </div>
+
+          <div class="story-container">
+            <div class="story-paper">
+              <div class="story-marker" id="story-meta-label">DIARY LOG: FUTURE VERSE</div>
+              <div class="story-scroll" id="story-text-container">
+                <p id="story-paragraph">Loading cinematic chronicle...</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Control Bar -->
+        <div class="dashboard-controls">
+          <button class="control-btn secondary-btn" id="reset-btn">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 12C3 16.9706 7.02944 21 12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C9.2853 3 6.85542 4.20577 5.2 6.13M3 6V9H6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Reset Simulator
+          </button>
+          
+          <button class="control-btn primary-btn" id="export-btn">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 15V3M12 15L8 11M12 15L16 11M5 17C5 18.1046 5.89543 19 7 19H17C18.1046 19 19 18.1046 19 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Export Report (.txt)
+          </button>
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>&copy; 2026 FutureForge AI. Ethics-First Multi-Agent Life Architect.</p>
+    </footer>
+  </div>
+
+  <!-- JavaScript Application -->
+  <script src="app.js"></script>
+</body>
+</html>
