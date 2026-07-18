@@ -91,29 +91,39 @@ function App() {
 
   // Run user profile analysis
   const runProfileAnalysis = async (e) => {
-    if (e) e.preventDefault();
-    setCompatLoading(true);
-    try {
-      const res = await fetch("https://futureforge-backend-0pfu.onrender.com/docs", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ social, risk, priority })
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setCompatScores(data.compatibility_scores);
-        setCompatAnalysis(data.analysis);
-      } else {
-        alert("Failed to analyze profile settings.");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Error contacting the compatibility engine.");
-    } finally {
-      setCompatLoading(false);
-    }
-  };
+  if (e) e.preventDefault();
+  setCompatLoading(true);
 
+  try {
+    const res = await fetch("https://futureforge-backend-0pfu.onrender.com/analyze-user", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        social,
+        risk: Number(risk) || 2,
+        priority
+      })
+    });
+
+    const data = await res.json();
+    console.log(data);
+
+    if (res.ok) {
+      setCompatScores(data.compatibility_scores);
+      setCompatAnalysis(data.analysis);
+    } else {
+      alert("Backend error: " + JSON.stringify(data));
+    }
+
+  } catch (err) {
+    console.error(err);
+    alert("Error contacting backend");
+  } finally {
+    setCompatLoading(false);
+  }
+};
   // Run full simulation
   const executeSimulation = async () => {s      
     setSimulationLoading(true);
@@ -435,7 +445,10 @@ function App() {
     <button
       key={option}
       className={`bubble ${energy === option ? "active" : ""}`}
-      onClick={() => setEnergy(option)}
+      onClick={() => {
+  setEnergy(option);
+  setSocial(option.toLowerCase());
+}}
     >
       {option}
     </button>
