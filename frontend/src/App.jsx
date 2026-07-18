@@ -94,7 +94,7 @@ function App() {
     if (e) e.preventDefault();
     setCompatLoading(true);
     try {
-      const res = await fetch("https://futureforge-backend-0pfu.onrender.com/analyze-user", {
+      const res = await fetch("https://futureforge-backend-0pfu.onrender.com/docs", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ social, risk, priority })
