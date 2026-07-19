@@ -3,6 +3,8 @@ import "./App.css";
 
 
 function App() {
+
+  const BASE_URL = "https://futureforge-backend-0pfu.onrender.com";
   // Navigation & UI state
   const [activeTab, setActiveTab] = useState("profile"); // profile, simulation, results, report, history
   const [apiConnected, setApiConnected] = useState(true);
@@ -77,7 +79,7 @@ function App() {
   const loadHistory = async () => {
     setHistoryLoading(true);
     try {
-      const res = await fetch("/api/decisions");
+      const res = await fetch(`${BASE_URL}/api/decisions`)
       if (res.ok) {
         const data = await res.json();
         setHistoryItems(data);
@@ -91,41 +93,31 @@ function App() {
 
   // Run user profile analysis
   const runProfileAnalysis = async (e) => {
-  if (e) e.preventDefault();
-  setCompatLoading(true);
-
-  try {
-    const res = await fetch("https://futureforge-backend-0pfu.onrender.com/analyze-user", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        social,
-        risk: Number(risk) || 2,
-        priority
-      })
-    });
-
-    const data = await res.json();
-    console.log(data);
-
-    if (res.ok) {
-      setCompatScores(data.compatibility_scores);
-      setCompatAnalysis(data.analysis);
-    } else {
-      alert("Backend error: " + JSON.stringify(data));
+    if (e) e.preventDefault();
+    setCompatLoading(true);
+    try {
+      const res = await fetch(`${BASE_URL}/api/analyze-user`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ social, risk, priority })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setCompatScores(data.compatibility_scores);
+        setCompatAnalysis(data.analysis);
+      } else {
+        alert("Failed to analyze profile settings.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error contacting the compatibility engine.");
+    } finally {
+      setCompatLoading(false);
     }
+  };
 
-  } catch (err) {
-    console.error(err);
-    alert("Error contacting backend");
-  } finally {
-    setCompatLoading(false);
-  }
-};
   // Run full simulation
-  const executeSimulation = async () => {s      
+  const executeSimulation = async () => {
     setSimulationLoading(true);
     setSimulationStepIndex(0);
     setSimulationResults(null);
@@ -166,7 +158,7 @@ function App() {
   }
 };
 
-      const res = await fetch("/api/simulate", {
+      const res = await fetch(`${BASE_URL}/api/simulate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
@@ -242,7 +234,7 @@ function App() {
         shareable: true
       };
 
-      const res = await fetch("/api/decisions", {
+      const res = await fetch(`${BASE_URL}/api/decisions`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
@@ -263,7 +255,7 @@ function App() {
     e.stopPropagation();
     if (!confirm("Are you sure you want to purge this record from your vault?")) return;
     try {
-      const res = await fetch(`/api/decisions/${id}`, {
+      const res = await fetch(`${BASE_URL}/api/decisions/${id}`, {
         method: "DELETE"
       });
       if (res.ok) {
@@ -308,7 +300,7 @@ function App() {
         priority
       };
       
-      const res = await fetch("/api/generate-report", {
+      const res = await fetch(`${BASE_URL}/api/generate-report`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
