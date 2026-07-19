@@ -65,7 +65,7 @@ function App() {
 
   const checkConnection = async () => {
     try {
-      const res = await fetch("/api/decisions");
+      const res = await fetch(`${BASE_URL}/api/decisions`);
       if (res.ok) {
         setApiConnected(true);
       } else {
@@ -79,7 +79,7 @@ function App() {
   const loadHistory = async () => {
     setHistoryLoading(true);
     try {
-      const res = await fetch(`${BASE_URL}/api/decisions`)
+      const res = await fetch("/api/decisions")
       if (res.ok) {
         const data = await res.json();
         setHistoryItems(data);
@@ -97,10 +97,16 @@ function App() {
     setCompatLoading(true);
     try {
       const res = await fetch("https://futureforge-backend-0pfu.onrender.com/api/analyze-user", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ social, risk, priority })
-      });
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    social,
+    risk,
+    priority
+  }),
+});
       if (res.ok) {
         const data = await res.json();
         setCompatScores(data.compatibility_scores);
