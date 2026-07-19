@@ -1,4 +1,7 @@
 # FutureForge AI 🚀
+
+🔗 Live Website: https://future-forge-ai-liart.vercel.app
+
 ### Enterprise-Grade Career Decision Intelligence & Trajectory Council Engine
 
 FutureForge AI is a state-of-the-art career trajectory intelligence platform. By combining **psychometric identity parameters** (Social Energy Mode, Volatility/Risk Tolerance, and Core Life Drivers) with **decision analysis models**, the application simulates the long-term impacts of career actions. It features an interactive **Trajectory Council Debate** (consisting of simulated Growth, Risk, and Happiness advisors), projects five-year milestones across best/average/worst-case scenarios, drafts cinematic future projections (Year-5 diary entries), and builds tailored SWOT analyses and risk-mitigation playbooks.
